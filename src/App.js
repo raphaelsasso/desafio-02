@@ -10,7 +10,7 @@ function App() {
     api.get('/repositories').then(response => {
       setRepositories(response.data);
     });
-  }, [repositories]);
+  }, []);
 
   async function handleAddRepository() {
     const response = await api.post('/repositories', {
@@ -30,7 +30,7 @@ function App() {
     if(repoIndex >= 0) {
       const response = await api.delete(`/repositories/${id}`);
       if(response.status === 204) {
-        repositories.splice(repoIndex, 1);
+        setRepositories(repositories.filter(repository => repository.id != id));
       } else {
         console.error("Repo not found");
       }
